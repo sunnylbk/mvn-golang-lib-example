@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>mvn-golang-lib-example</artifactId>
+        <groupId>com.sunnylbk</groupId>
+        <version>1.0.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>mvn-golang-lib</artifactId>
+    <packaging>mvn-golang</packaging>
+
+    <build>
+        <finalName>${project.artifactId}</finalName>
+        <sourceDirectory>${basedir}${file.separator}src</sourceDirectory>
+        <directory>${basedir}${file.separator}bin</directory>
+
+        <plugins>
+            <plugin>
+                <groupId>com.igormaznitsa</groupId>
+                <artifactId>mvn-golang-wrapper</artifactId>
+                <version>${mvn.golang.wrapper.plugin.version}</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <useEnvVars>true</useEnvVars>
+                    <goVersion>${mvn.golang.go.version}</goVersion>
+                    <buildMode>archive</buildMode>
+                    <packages>
+                        <package>./...</package>
+                    </packages>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-install-plugin</artifactId>
+                <version>2.5.2</version>
+                <executions>
+                    <execution>
+                        <id>save-result-as-artifact</id>
+                        <phase>install</phase>
+                        <goals>
+                            <goal>install-file</goal>
+                        </goals>
+                        <configuration>
+                            <file>
+                                ${basedir}${file.separator}bin${file.separator}${project.build.finalName}-${project.version}.mvn-golang
+                            </file>
+                            <groupId>${project.groupId}</groupId>
+                            <artifactId>${project.artifactId}-result</artifactId>
+                            <version>${project.version}</version>
+                            <packaging>zip</packaging>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>

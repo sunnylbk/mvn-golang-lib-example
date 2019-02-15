@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>mvn-golang-lib-example</artifactId>
+        <groupId>com.sunnylbk</groupId>
+        <version>1.0.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>mvn-golang-test-lib</artifactId>
+    <packaging>mvn-golang</packaging>
+
+    <!-- the dependency section has been added just to show maven reactor that the app module depends on the lib module -->
+    <dependencies>
+        <dependency>
+            <groupId>com.sunnylbk</groupId>
+            <artifactId>mvn-golang-lib-result</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+            <type>zip</type>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <sourceDirectory>${basedir}${file.separator}src</sourceDirectory>
+        <directory>${basedir}${file.separator}bin</directory>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>3.1.1</version>
+                <executions>
+                    <execution>
+                        <id>find-artifact-and-unpack-in-bin</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>unpack</goal>
+                        </goals>
+                        <configuration>
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>${project.groupId}</groupId>
+                                    <artifactId>mvn-golang-lib-result</artifactId>
+                                    <version>1.0.0-SNAPSHOT</version>
+                                    <type>zip</type>
+                                    <overWrite>true</overWrite>
+                                    <outputDirectory>${env.GOPATH}</outputDirectory>
+                                </artifactItem>
+                            </artifactItems>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>com.igormaznitsa</groupId>
+                <artifactId>mvn-golang-wrapper</artifactId>
+                <version>${mvn.golang.wrapper.plugin.version}</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <useEnvVars>true</useEnvVars>
+                    <goVersion>${mvn.golang.go.version}</goVersion>
+                    <addToGoPath>
+                        <path>${project.build.directory}${file.separator}mvn-golang-lib</path>
+                    </addToGoPath>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <packages>
+                                <package>main.go</package>
+                            </packages>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>
