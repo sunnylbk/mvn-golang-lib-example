@@ -1,4 +1,4 @@
-package mvngotest
+package mvngolib
 
 import "fmt"
 

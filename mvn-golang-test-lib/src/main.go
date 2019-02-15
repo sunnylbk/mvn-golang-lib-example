@@ -1,7 +1,9 @@
 package main
 
-import "com/sunnylbk/mvngotest"
+import (
+	"com/sunnylbk/mvngolib"
+)
 
 func main() {
-	mvngotest.SomeTestMethod()
+	mvngolib.SomeTestMethod()
 }

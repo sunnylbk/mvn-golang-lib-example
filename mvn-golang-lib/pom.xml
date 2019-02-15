@@ -30,6 +30,11 @@
                     <packages>
                         <package>./...</package>
                     </packages>
+                    <targetOs>linux</targetOs>
+                    <targetArch>amd64</targetArch>
+                    <env>
+                        <GO111MODULE>on</GO111MODULE>
+                    </env>
                 </configuration>
             </plugin>
             <plugin>
