@@ -34,7 +34,7 @@
                 <executions>
                     <execution>
                         <id>find-artifact-and-unpack-in-bin</id>
-                        <phase>generate-sources</phase>
+                        <phase>initialize</phase>
                         <goals>
                             <goal>unpack</goal>
                         </goals>
@@ -64,19 +64,24 @@
                     <addToGoPath>
                         <path>${project.build.directory}${file.separator}mvn-golang-lib</path>
                     </addToGoPath>
+                    <targetOs>linux</targetOs>
+                    <targetArch>amd64</targetArch>
+                    <env>
+                        <GO111MODULE>on</GO111MODULE>
+                    </env>
                 </configuration>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>run</goal>
-                        </goals>
-                        <configuration>
-                            <packages>
-                                <package>main.go</package>
-                            </packages>
-                        </configuration>
-                    </execution>
-                </executions>
+                <!--<executions>-->
+                    <!--<execution>-->
+                        <!--<goals>-->
+                            <!--<goal>run</goal>-->
+                        <!--</goals>-->
+                        <!--<configuration>-->
+                            <!--<packages>-->
+                                <!--<package>main.go</package>-->
+                            <!--</packages>-->
+                        <!--</configuration>-->
+                    <!--</execution>-->
+                <!--</executions>-->
             </plugin>
         </plugins>
     </build>

@@ -12,6 +12,7 @@
     <description>Example how to use mvn-golang artifact saved in maven repository</description>
 
     <properties>
+        <jfrogcli.path>jfrog</jfrogcli.path>
         <mvn.golang.wrapper.plugin.version>2.2.1-SNAPSHOT</mvn.golang.wrapper.plugin.version>
         <mvn.golang.go.version>1.11.5</mvn.golang.go.version>
     </properties>
